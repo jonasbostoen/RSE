@@ -45,7 +45,7 @@ def server():
             #output = str(sub.run(["ls"], capture_output=True).stdout) + "\n"
             #print(sub.run(["ls"], capture_output=True).stdout)
             #conn.send(output.encode())
-            sub.run(["/home/arched/Projects/RemoteExec/python/example_script.sh"])
+            sub.run(["/path/to/example_script.sh"])
             server_socket.close()
             conn.close()
             return "Process Complete"
