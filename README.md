@@ -3,7 +3,10 @@
 ## Introduction
 Python script made to execute server code once client is authenticated. This will be used on a windows server to execute powershell code as a test.
 
-To connect to the server (client.py is still work in progress), download the ncat tool, and use
+To connect to the server (client.py is still work in progress), download the ncat tool, and use netcat or ncat:
+```
+$ nc --local-port 4444 -nv <server_ip> 1234
+```
 ```
 $ ncat --source-port 4444 -nv <server_ip> 1234
 ```
