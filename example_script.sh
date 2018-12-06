@@ -1,3 +1,6 @@
 #!/bin/bash
 
-echo "The python way seems to be working" > /home/arched/Projects/RemoteExec/python.txt
+# Example
+echo "This seems to be working" > /path/to/file/example.txt
+
+# Your server script here
