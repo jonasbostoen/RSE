@@ -55,15 +55,8 @@ def server():
             return "ERROR: Wrong password"
         
         elif recv.lower().strip() == password:
-            #output = str(sp.run(["ls"], capture_output=True).stdout) + "\n"
-            #print(sp.run(["ls"], capture_output=True).stdout)
-            #conn.send(output.encode())
-<<<<<<< HEAD
-            sp.run(["/home/arched/Projects/RemoteExec/python/example_script.sh"])
+            sp.run(["./example_script.sh"])
             conn.send("Process completed.".encode())
-=======
-            sub.run(["/path/to/example_script.sh"])
->>>>>>> d4bbdc181da2f2aa19056dba42d5748d589df08d
             server_socket.close()
             conn.close()
             return "Process Complete"
