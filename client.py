@@ -3,8 +3,10 @@ import getpass
 
 def client():
     source_port = 4444
-    source_host = "localhost"
-    host = "127.0.0.1"
+    # Gets IP address automatically
+    source_host = socket.gethostbyname(socket.gethostname())
+    # Set server IP address manually
+    host = "192.168.106.108"
     port = 1234
 
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -15,15 +17,15 @@ def client():
     exit_codes = ["wrong password.", "process completed."]
 
     while True:
+
         data = client_socket.recv(1024).decode()
         print(data)
-        
         if data.lower().strip() in exit_codes:
             break
 
         message = getpass.getpass("Password: ")
         client_socket.send(message.encode())
-
+     
 
     client_socket.close()
 
