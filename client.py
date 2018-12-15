@@ -5,8 +5,9 @@ def client():
     source_port = 4444
     # Gets IP address automatically
     source_host = socket.gethostbyname(socket.gethostname())
+    print("Source host: {}".format(source_host))
     # Set server IP address manually
-    host = "192.168.106.108"
+    host = "192.168.200.123"
     port = 1234
 
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

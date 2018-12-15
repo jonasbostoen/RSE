@@ -7,24 +7,40 @@ import subprocess as sp
 
 def server():
     # Define server
-    host = socket.gethostbyname(socket.gethostname()) 
-    port = 1234
+    try:
+        host = socket.gethostbyname(socket.gethostname()) 
+        port = 1234
+    except Exception as e:
+        print("ERROR: Can't create host, enter the host IP address manually.")
+        raise e
 
     # Create an INET streaming socket (i.e. IPv4 and TCP)
-    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    server_socket.bind((host, port))
-    
-        # Read whitelisted IPs and ports from file
-    ip_file = open("allowed_ips.txt", "r")
-    ip_list = [line.strip('\n') for line in ip_file]
-    print(ip_list) 
+    try:
+        server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        server_socket.bind((host, port))
+    except Exception as e:
+        print("ERROR: Can't create socket.")
+        raise e 
+
+    # Read whitelisted IPs and ports from file
+    try:
+        ip_file = open("allowed_ips.txt", "r")
+        ip_list = [line.strip('\n') for line in ip_file]
+        print("Allowed IP addresses: {}".format([ip for ip in ip_list])) 
+    except IOError as e:
+        print("ERROR: allowed_ips.txt can't be opened. Check if it is in the same directory and has the name 'allowed_ips.txt'.")
+        raise e
 
     ip_file.close()
     
-    port_file = open("allowed_ports.txt", "r")
-    port_list = [int(line.strip('\n')) for line in port_file]
-    print(port_list)
+    try:
+        port_file = open("allowed_ports.txt", "r")
+        port_list = [int(line.strip('\n')) for line in port_file]
+        print("Allowed port numbers: {}".format([port for port in port_list]))
+    except IOError as e:
+        print("ERROR: allowed_ports.txt can't be opened. Check if it is in the same directory and has the name 'allowed_ports.txt'.")
+        raise e
 
     port_file.close()
     password = "testpassword"
@@ -40,11 +56,11 @@ def server():
 
         if str(address[0]) not in ip_list:
             conn.close()
-            print("Error: forbidden IP address")
+            print("ERROR: forbidden IP address")
         
         if address[1] not in port_list:
             conn.close()
-            print("Error: forbidden port number")
+            print("ERROR: forbidden port number")
     
 
         data = "Please enter the password below.\n"
@@ -58,7 +74,11 @@ def server():
             print("Error: wrong password! Connection closed.");
         
         elif recv.lower().strip() == password:
-            sp.run(["./example_script.sh"])
+            try:
+                sp.run(["./example_script.sh"])
+            except IOError as e:
+                print("ERROR: Can't run executable. Please check if the path is correct.")
+                raise e
             conn.send("Process completed.".encode())
             conn.close()
             print("Process completed. Connection closed.")
