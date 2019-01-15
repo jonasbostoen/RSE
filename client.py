@@ -9,6 +9,7 @@ def client():
     source_port = 4444
     # Gets IP address automatically
     source_host = socket.gethostbyname(socket.gethostname())
+<<<<<<< HEAD
     print("Source host: {}".format(source_host))
 
     # INTERVENTION #
@@ -18,6 +19,10 @@ def client():
     host = f.readline().strip()
     f.close()
 
+=======
+    # Set server IP address manually
+    host = "SERVER_IP"
+>>>>>>> 90a622a5518fa06824e5a24895e643530365741e
     port = 1234
 
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
