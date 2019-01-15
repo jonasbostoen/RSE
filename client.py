@@ -1,13 +1,23 @@
 import socket
 import getpass
+import time
 
 def client():
+    # INTERVENTION #
+    # ============== #
+    # Set source port
     source_port = 4444
     # Gets IP address automatically
     source_host = socket.gethostbyname(socket.gethostname())
     print("Source host: {}".format(source_host))
-    # Set server IP address manually
-    host = "192.168.200.123"
+
+    # INTERVENTION #
+    # ============== #
+    # Enter the IP of the server in the file <server.txt>
+    f = open('server.txt', 'r')
+    host = f.readline().strip()
+    f.close()
+
     port = 1234
 
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -22,6 +32,8 @@ def client():
         data = client_socket.recv(1024).decode()
         print(data)
         if data.lower().strip() in exit_codes:
+            print("Closing program...")
+            time.sleep(3)
             break
 
         message = getpass.getpass("Password: ")

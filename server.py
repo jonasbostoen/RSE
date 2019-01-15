@@ -1,10 +1,6 @@
 import socket
 import subprocess as sp
 
-# ================= TO-DO ================= # 
-# Allow 3 attempts before closing connection
-# Blacklist IP addresses after too many failed attempts
-
 def server():
     # Define server
     try:
@@ -43,6 +39,10 @@ def server():
         raise e
 
     port_file.close()
+
+    # INTERVENTION # 
+    # ============ #
+    # change password with your password
     password = "testpassword"
 
     # Listen for 1 connection at a time
@@ -62,8 +62,8 @@ def server():
             conn.close()
             print("ERROR: forbidden port number")
     
+        data = "Typ het Clear Printer Queue paswoord in en duw ENTER. (Het getypte passwoord wordt niet getoond voor veiligheidsredenen, maar je bent wel degelijk iets aan het typen)\n"
 
-        data = "Please enter the password below.\n"
         conn.send(data.encode())
         recv = str(conn.recv(1024).decode())
         print("Client > " + recv)
@@ -75,7 +75,10 @@ def server():
         
         elif recv.lower().strip() == password:
             try:
-                sp.run(["./example_script.sh"])
+                # INTERVENTION # 
+                # ============== #
+                # Enter absolute path with double backslashes
+                sp.run(["C:\\path\\to\\script"])
             except IOError as e:
                 print("ERROR: Can't run executable. Please check if the path is correct.")
                 raise e
